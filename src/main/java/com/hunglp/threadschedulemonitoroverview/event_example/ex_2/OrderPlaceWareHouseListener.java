@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
+@org.springframework.core.annotation.Order(2)
 public class OrderPlaceWareHouseListener implements ApplicationListener<OrderPlaceEvent> {
 
     @Autowired

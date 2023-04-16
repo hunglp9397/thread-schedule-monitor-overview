@@ -5,7 +5,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+@org.springframework.core.annotation.Order(1)
 @Component
+
 public class OrderPlaceEventListener  implements ApplicationListener<OrderPlaceEvent> {
 
     @Autowired
