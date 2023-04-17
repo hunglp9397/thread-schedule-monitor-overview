@@ -8,7 +8,7 @@ package com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_
     2. Yêu cầu:
         - Tìm cách tối ưu bằng cách tạo schedule (cronjob) restart url mà đang k có client nào thực hiện connect tới
     3. Implement:
-        ...
+        - Khai báo urlService trong file Application properties
 
 * */
 

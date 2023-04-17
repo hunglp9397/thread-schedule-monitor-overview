@@ -1,7 +1,7 @@
 package com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url;
 
-import com.hunglp.threadschedulemonitoroverview.event_example.ex_2.Customer;
-import com.hunglp.threadschedulemonitoroverview.event_example.ex_2.Order;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +14,9 @@ import java.util.Date;
 @SpringBootApplication
 public class MainApp {
 
+    @Autowired
+    private WebSocket webSocket;
+
     public static void main(String[] args) {
         SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url.MainApp.class, args);
     }
@@ -21,8 +24,8 @@ public class MainApp {
     @Bean
     CommandLineRunner run() {
         return args -> {
+            webSocket.connectWebSocket();
 
-            System.out.println("You will do it");
 
         };
     }
