@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 public class RestartClient {
     @Scheduled(cron = "15 * * * * ?")
     public void scheduleTaskWithCronExpression() {
-        System.out.println("Job every 1 minute");
+
+        // For loop all map status, get the first url is OK, set pending and break;
+
+        // Check list client acitve of url
+
+        // Wait unitl list client
     }
 }

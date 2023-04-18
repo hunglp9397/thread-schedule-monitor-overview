@@ -51,12 +51,7 @@ public class VoiceToTextBatch {
     public void executeDecodeVoiceToText(){
 
         // Get url
-        String urlVoiceToText = getUrlWebSocket();;
-
-
-        System.out.println(urlVoiceToText);
-
-
+        String urlVoiceToText = getUrlWebSocket();
 
         // Connect WebSocket
 
