@@ -8,14 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.Date;
-
 @EnableScheduling
 @SpringBootApplication
 public class MainApp {
-
     @Autowired
-    private WebSocket webSocket;
+    private VoiceToTextBatch voiceToTextBatch;
 
     public static void main(String[] args) {
         SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url.MainApp.class, args);
@@ -24,7 +21,7 @@ public class MainApp {
     @Bean
     CommandLineRunner run() {
         return args -> {
-            webSocket.connectWebSocket();
+            voiceToTextBatch.executeDecodeVoiceToText();
 
 
         };
