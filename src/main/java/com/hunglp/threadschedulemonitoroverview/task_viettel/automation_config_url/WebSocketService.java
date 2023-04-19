@@ -5,19 +5,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public class WebSocketService {
+
+    private final String url;
 
     Logger logger = LoggerFactory.getLogger(WebSocketService.class);
 
-    public void connect(String url) throws InterruptedException {
-        logger.info("Connectting...", url);
-        Thread.sleep(1000);
-        logger.info("Decoding...");
+    public WebSocketService(String url) {
+
+        this.url = url;
     }
 
-    public void close(String url){
-        logger.info("Disconnected ws !", url);
+    public boolean connect() throws InterruptedException {
+        logger.info("Connecting... : {}", this.url);
+        Thread.sleep(1000);
+        logger.info("Decoding...");
+        Thread.sleep(500);
+        logger.info("Decode done!");
+        return true;
     }
+
+    public void close(){
+        logger.info("Disconnected websocket. URL: {}", this.url);
+    }
+
+
 
 }

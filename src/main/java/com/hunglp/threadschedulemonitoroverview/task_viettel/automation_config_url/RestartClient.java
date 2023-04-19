@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RestartClient {
-    @Scheduled(cron = "15 * * * * ?")
+//    @Scheduled(cron = "15 * * * * ?")
     public void scheduleTaskWithCronExpression() {
 
         // For loop all map status, get the first url is OK, set pending and break;
