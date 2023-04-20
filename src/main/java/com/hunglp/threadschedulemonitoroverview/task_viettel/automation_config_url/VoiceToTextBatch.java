@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
 public class VoiceToTextBatch {
 
     Logger logger = LoggerFactory.getLogger(VoiceToTextBatch.class);
+
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+
     private List<String> listOfUrlsWebSocket;
 
     AtomicInteger urlV2TIndex = new AtomicInteger(1);
@@ -47,36 +52,53 @@ public class VoiceToTextBatch {
     }
 
 
-    public void executeDecodeVoiceToText() throws InterruptedException {
-        logger.info("---START---");
+    public void executeDecodeVoiceToText(){
 
-        // Get url
-        String url = getUrlWebSocket();
+        for (int i = 0; i < 10; i++) {
+            executorService.execute(() -> {
+                logger.info("---START---");
 
-        // Init ws, then connect
-        WebSocketService ws = new WebSocketService(url);
-        boolean response = ws.connect();
-        if(response){
-            urlToInstance.compute(url, (k, v) -> {
-//                v = v != null ? new ArrayList<>(v) : new ArrayList<>();
-                v.add(ws);
-                return v;
+                // Get url
+                String url = getUrlWebSocket();
+
+                // Init ws, then connect
+                WebSocketService ws = new WebSocketService(url);
+                boolean response = false;
+                try {
+                    response = ws.connect();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if(response){
+                    urlToInstance.compute(url, (k, v) -> {
+                        v.add(ws);
+                        return v;
+                    });
+
+                    // Suppose Decoding as Thread.sleep
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                // Close websocket
+                ws.close();
+
+
+                // Remove instance from list
+                urlToInstance.computeIfPresent(url, (k,v)->{
+                    v.remove(ws);
+                    return v;
+                });
+
+                logger.info("----END---- \n");
             });
-
-            // Suppose Decoding as Thread.sleep
-            Thread.sleep(50);
         }
-        // Close websocket
-        ws.close();
 
 
-        // Remove instance from list
-        urlToInstance.computeIfPresent(url, (k,v)->{
-           v.remove(ws);
-           return v;
-        });
 
-        logger.info("----END---- \n");
+
 
     }
 
