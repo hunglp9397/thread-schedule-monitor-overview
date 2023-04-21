@@ -94,6 +94,23 @@ public class VoiceToTexSubcriber {
 
 
 
+=============Web Socket Client========
+
+public class WebSocketClient implements Closeable {
+
+    public void start(){
+    }
+    
+    public void stop(){
+    }
+}
+
+
+
+
+
+
+
 
 
 
