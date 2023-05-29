@@ -106,8 +106,94 @@ public class WebSocketClient implements Closeable {
 }
 
 
+- Task thứ hai về Thread:
 
-hallo
+Module "anti-business-call" cần send thông tin payload về survey sang module "sms-api"
+
+
+Ta cần gửi 1 list các susrvey, Mỗi survey như sau : suspectPhone, surveyPhone, daDate
+
+Luồng sms-api cần phải thực hiện gửi bản tin và insert thông tin vô bảng survey
+
+=> Giải quyết ta dùng Excutor Service cho con sms_api
+
+ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+
+// Dùng thằng Future này để callable trả về được kết quả json String
+
+List<Future<List<SurveySmsDetailDTO>>> futures = new ArrayList<>();
+        Future<List<SurveySmsDetailDTO>> future;
+
+        List<SendSmsCallable> sendSmsCallableList = new ArrayList<>();
+
+        for (int i = 0; i < listSurveySubparts.size(); i++) {
+            SendSmsCallable sendSmsCallable = new SendSmsCallable(listSurveySubparts.get(i), surveyRepository, sendSmsService);
+            sendSmsCallableList.add(sendSmsCallable);
+        }
+
+        LOGGER.info("Submitting jobs");
+
+        try {
+            futures = executor.invokeAll(sendSmsCallableList);
+        } catch (InterruptedException e) {
+            LOGGER.error("ERROR invoke executor Callable " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        
+        // SendSmsCallable implement callable, Thực hiện send và save thong tin khảo sát
+        
+public class SendSmsCallable implements Callable<List<SurveySmsDetailDTO>> {
+
+    private static final Logger LOGGER = Logger.getLogger(SendSmsCallable.class);
+    List<Survey> surveyList;
+
+    SurveyRepository surveyRepository;
+
+    SendSmsService sendSmsService;
+
+
+    public SendSmsCallable(List<Survey> surveyList, SurveyRepository surveyRepository, SendSmsService sendSmsService ) {
+        this.surveyList = surveyList;
+        this.surveyRepository = surveyRepository;
+        this.sendSmsService = sendSmsService;
+    }
+
+    @Override
+    public List<SurveySmsDetailDTO> call() {
+        return getListSurveySent(surveyList);
+    }
+
+    public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
+
+        List<SurveySmsDetailDTO> surveySmsDetailDTOS = new ArrayList<>();
+
+        surveyList.parallelStream().forEach(survey -> {
+            SurveySmsDetailDTO surveySmsDetailDTO = new SurveySmsDetailDTO();
+            surveySmsDetailDTO.setSurveyPhone(survey.getSurveyPhone());
+            surveySmsDetailDTO.setSuspectPhone(survey.getSpamPhone());
+            surveySmsDetailDTO.setdDate(survey.getdDate());
+            surveySmsDetailDTO.setTimeSpam(survey.getTimeSpam());
+
+            long startTime = System.currentTimeMillis();
+            if(surveyRepository.save(survey) == 1 && sendSmsService.sendSms(survey) == 1){
+                surveySmsDetailDTO.setSuccess(true);
+            }else{
+                surveySmsDetailDTO.setSuccess(false);
+            }
+            surveySmsDetailDTO.setLatencyMs(System.currentTimeMillis() - startTime);
+            surveySmsDetailDTOS.add(surveySmsDetailDTO);
+        });
+
+        return surveySmsDetailDTOS;
+    }
+}
+==> Như code trên hình, ta dùng thêm parallelSream để tối ưu luồng đọc bản tin, save và send
+
+
+
+
 
 
 
