@@ -309,12 +309,7 @@ public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
 
         return surveySmsDetailDTOS;
     }
-
-
-
-
-
-
+Blog Hay để vọc code : https://yellowcodebooks.com/category/lap-trinh-java/page/2/
 
 
 
