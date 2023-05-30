@@ -115,34 +115,110 @@ Ta cần gửi 1 list các susrvey, Mỗi survey như sau : suspectPhone, survey
 
 Luồng sms-api cần phải thực hiện gửi bản tin và insert thông tin vô bảng survey
 
-=> Giải quyết ta dùng Excutor Service cho con sms_api
+=> Giải quyết ta dùng Excutor Service cho con sms_api, 
 
-ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-
-
-// Dùng thằng Future này để callable trả về được kết quả json String
-
-List<Future<List<SurveySmsDetailDTO>>> futures = new ArrayList<>();
-        Future<List<SurveySmsDetailDTO>> future;
-
-        List<SendSmsCallable> sendSmsCallableList = new ArrayList<>();
-
-        for (int i = 0; i < listSurveySubparts.size(); i++) {
-            SendSmsCallable sendSmsCallable = new SendSmsCallable(listSurveySubparts.get(i), surveyRepository, sendSmsService);
-            sendSmsCallableList.add(sendSmsCallable);
-        }
-
-        LOGGER.info("Submitting jobs");
-
+    @PostMapping(path = "/send", consumes = "application/json", produces = "application/json")
+    public String updateResponseVer2(@RequestBody List<Survey> request) {
+        long startTime = System.currentTimeMillis();
+        String resultStr = null;
         try {
-            futures = executor.invokeAll(sendSmsCallableList);
-        } catch (InterruptedException e) {
-            LOGGER.error("ERROR invoke executor Callable " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+            LOGGER.info(String.format("Received request size =  %d",request.size()));
 
+            int numThreads = 5;
+
+
+            int nElementsEachThread = request.size() / numThreads;
+
+            List<List<Survey>> listSurveySubparts = new ArrayList<>(numThreads);
+
+            for (int i = 0; i < numThreads - 1; i++) {
+                listSurveySubparts.add(request.subList(i * nElementsEachThread, (i + 1) * nElementsEachThread));
+            }
+            listSurveySubparts.add(request.subList((numThreads - 1) * nElementsEachThread, request.size()));
+
+
+            LOGGER.info("Divided into " + numThreads + " parts");
+
+
+            ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+            List<Future<List<SurveySmsDetailDTO>>> futures = new ArrayList<>();
+            Future<List<SurveySmsDetailDTO>> future;
+
+            List<SendSmsCallable> sendSmsCallableList = new ArrayList<>();
+
+            for (int i = 0; i < listSurveySubparts.size(); i++) {
+                SendSmsCallable sendSmsCallable = new SendSmsCallable(listSurveySubparts.get(i), surveyRepository, sendSmsService);
+                sendSmsCallableList.add(sendSmsCallable);
+            }
+
+            LOGGER.info("Submitting jobs");
+
+            try {
+                futures = executor.invokeAll(sendSmsCallableList);
+            } catch (InterruptedException e) {
+                LOGGER.error("ERROR invoke executor Callable " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            LOGGER.info("Done jobs");
+
+            executor.shutdown();
+
+            LOGGER.info("Shutdown jobs");
+
+            LOGGER.info("Parsing result");
+            List<SurveySmsDetailDTO> surveySmsDetailDTOList = new ArrayList<>();
+            for (int i = 0; i < futures.size(); i++) {
+                try {
+                    List<SurveySmsDetailDTO> surveyResult = futures.get(i).get();
+                    surveySmsDetailDTOList.addAll(surveyResult);
+                } catch (InterruptedException | ExecutionException e) {
+                    LOGGER.error("Error When Load Result! Exception :" + e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+
+            long totalSuccess = surveySmsDetailDTOList
+                    .stream()
+                    .filter(SurveySmsDetailDTO::isSuccess)
+                    .count();
+
+            long totalFail = surveySmsDetailDTOList
+                    .stream()
+                    .filter(s -> !s.isSuccess())
+                    .count();
+
+            SendSurveySmsResultDTO resultDTO = new SendSurveySmsResultDTO();
+            resultDTO.setSurveySmsDetailList(surveySmsDetailDTOList);
+            resultDTO.setTotalSuccess(totalSuccess);
+            resultDTO.setTotalFail(totalFail);
+
+
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                resultStr = objectMapper.writeValueAsString(resultDTO);
+
+            } catch (Exception e) {
+                LOGGER.error("Convert Object to JSON Fail!" + e.getMessage());
+            }
+
+            LOGGER.info("Parsed result");
+            LOGGER.info("TOTAL_SUCCESS: " + resultDTO.getTotalSuccess());
+            LOGGER.info("TOTAL_FAIL: " + resultDTO.getTotalFail());
+            LOGGER.info("LIST SIZE: " + resultDTO.getSurveySmsDetailList().size());
+            LOGGER.info("TIME EXECUTE THIS API : "+ (System.currentTimeMillis() - startTime));
+            LOGGER.info("-------------------");
+
+        } catch (Exception e){
+            LOGGER.error(String.format("%s", e));
+            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
+        }
+        return resultStr;
+    }
         
-        // SendSmsCallable implement callable, Thực hiện send và save thong tin khảo sát
+// SendSmsCallable implement callable, Thực hiện send và save thong tin khảo sát
         
 public class SendSmsCallable implements Callable<List<SurveySmsDetailDTO>> {
 
