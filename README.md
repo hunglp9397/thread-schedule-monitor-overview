@@ -40,7 +40,7 @@ public class EventListenConfig {
 
 =====VoiceToTextBatchEvent==========
 public class CallV2TBatchEvent extends ApplicationEvent {
-private final CallBatch callBatch;
+    private final CallBatch callBatch;
 
     public CallV2TBatchEvent(Object source, CallBatch callBatch) {
         super(source);
@@ -59,7 +59,7 @@ private final CallBatch callBatch;
 
 @Service
 public class VoiceToTextBatchPublisher {
-private final ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public VoiceToTextBatchPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
@@ -79,11 +79,11 @@ private final ApplicationEventPublisher applicationEventPublisher;
 ==========VoiceToTexSubcriber=====
 @Service
 public class VoiceToTexSubcriber {
-@Async
-@EventListener
-public void DoSomething(VoiceToTextBatchEvent voiceToTextBatchEvent) {
-
-
+  @Async
+    @EventListener
+    public void DoSomething(VoiceToTextBatchEvent voiceToTextBatchEvent) {
+    
+    
     }
 }
 
@@ -115,7 +115,7 @@ Ta cần gửi 1 list các susrvey, Mỗi survey như sau : suspectPhone, survey
 
 Luồng sms-api cần phải thực hiện gửi bản tin và insert thông tin vô bảng survey
 
-=> Giải quyết ta dùng Excutor Service cho con sms_api,
+=> Giải quyết ta dùng Excutor Service cho con sms_api, 
 
     @PostMapping(path = "/send", consumes = "application/json", produces = "application/json")
     public String updateResponseVer2(@RequestBody List<Survey> request) {
@@ -217,9 +217,9 @@ Luồng sms-api cần phải thực hiện gửi bản tin và insert thông tin
         }
         return resultStr;
     }
-
+        
 // SendSmsCallable implement callable, Thực hiện send và save thong tin khảo sát
-
+        
 public class SendSmsCallable implements Callable<List<SurveySmsDetailDTO>> {
 
     private static final Logger LOGGER = Logger.getLogger(SendSmsCallable.class);
@@ -266,10 +266,10 @@ public class SendSmsCallable implements Callable<List<SurveySmsDetailDTO>> {
     }
 }
 ==> Như code trên hình, ta dùng thêm parallelSream để tối ưu luồng đọc bản tin, save và send
-
+    
 Tuy nhiên ArrayList xử lí đa luồng dẫn đến hiện tượng không đọc hết các phần tử trong một List => Dẫn đến lỗi NullPointerException
 
-Do đó sửa lại đoạn sử dụng paralelStream như sau :
+Do đó sửa lại đoạn sử dụng paralelStream như sau : 
 
 
 public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
