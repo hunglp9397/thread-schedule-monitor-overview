@@ -190,6 +190,49 @@ public class SendSmsCallable implements Callable<List<SurveySmsDetailDTO>> {
     }
 }
 ==> Như code trên hình, ta dùng thêm parallelSream để tối ưu luồng đọc bản tin, save và send
+    
+Tuy nhiên ArrayList xử lí đa luồng dẫn đến hiện tượng không đọc hết các phần tử trong một List => Dẫn đến lỗi NullPointerException
+
+Do đó sửa lại đoạn sử dụng paralelStream như sau : 
+
+
+public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
+
+        LOGGER.info("Survey Size Handle : " + surveyList.size());
+
+        List<SurveySmsDetailDTO> surveySmsDetailDTOS = new ArrayList<>();
+
+        try {
+            surveyList.parallelStream().collect(Collectors.toList()).forEach(survey -> {
+                try {
+                    SurveySmsDetailDTO surveySmsDetailDTO = new SurveySmsDetailDTO();
+                    surveySmsDetailDTO.setSurveyPhone(survey.getSurveyPhone());
+                    surveySmsDetailDTO.setSuspectPhone(survey.getSpamPhone());
+                    surveySmsDetailDTO.setdDate(survey.getdDate());
+                    surveySmsDetailDTO.setTimeSpam(survey.getTimeSpam());
+
+                    long startTime = System.currentTimeMillis();
+                    if(surveyRepository.save(survey) == 1 && sendSmsService.sendSms(survey) == 1){
+                        surveySmsDetailDTO.setSuccess(true);
+                    }else{
+                        surveySmsDetailDTO.setSuccess(false);
+                    }
+                    surveySmsDetailDTO.setLatencyMs(System.currentTimeMillis() - startTime);
+                    surveySmsDetailDTOS.add(surveySmsDetailDTO);
+                } catch (Exception e) {
+                    LOGGER.error(String.format("%s", e));
+                    LOGGER.error(e.getMessage(), e);
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            LOGGER.error(String.format("%s", e));
+            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
+        }
+
+        return surveySmsDetailDTOS;
+    }
 
 
 
