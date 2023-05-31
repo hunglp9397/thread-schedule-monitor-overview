@@ -355,6 +355,6 @@ Example 3:
     => Tạo ra một ThreadPool có chứa tối đa nThread, Khi ThreadPool đạt đến giá trị tối đa nThread. Các thread còn lại sẽ đưa vào hàng chờ và đợi đến khi Thread có trong Pool được xử lý rồi mới thực thi tiếp
     
 
-
+Link pdf by Nam ben : https://github.com/NamNguyen2110/book-pdf
 
 
