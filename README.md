@@ -309,6 +309,32 @@ public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
 
         return surveySmsDetailDTOS;
     }
+    
+    
+    =====
+    DTO : 
+     public class SurveySmsDetailDTO {
+
+
+    private String suspectPhone;
+    private String surveyPhone;
+    private boolean isSuccess;
+
+    private String dDate;
+
+    private String timeSpam;  
+    
+    }
+    
+    public class SendSurveySmsResultDTO {
+        private Long totalSuccess;
+        private Long totalFail;
+        private List<SurveySmsDetailDTO> surveySmsDetailList;
+    }
+
+    
+    
+    
 Blog Hay để vọc code : https://yellowcodebooks.com/category/lap-trinh-java/page/2/
     
 Example 1: 
