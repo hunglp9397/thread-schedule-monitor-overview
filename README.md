@@ -1,4 +1,4 @@
-# Ví dụ về thread, multithread, monitor, schedule (Bao gồm cac task ở Viettel)
+# Ví dụ về thread, multithread, monitor, schedule (Bao gồm các task ở Viettel)
 
 ##### - Ở mỗi package có file package-info miêu tả require example hoặc cách implement, giải thích :D\\
 
@@ -309,8 +309,52 @@ public  List<SurveySmsDetailDTO> getListSurveySent(List<Survey> surveyList) {
 
         return surveySmsDetailDTOS;
     }
+    
+    
+    =====
+    DTO : 
+     public class SurveySmsDetailDTO {
+
+
+    private String suspectPhone;
+    private String surveyPhone;
+    private boolean isSuccess;
+
+    private String dDate;
+
+    private String timeSpam;  
+    
+    }
+    
+    public class SendSurveySmsResultDTO {
+        private Long totalSuccess;
+        private Long totalFail;
+        private List<SurveySmsDetailDTO> surveySmsDetailList;
+    }
+
+    
+    
+    
 Blog Hay để vọc code : https://yellowcodebooks.com/category/lap-trinh-java/page/2/
+    
+Example 1: 
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    
+    Giúp tạo ra một ThreadPool có khả năng thực thi 1 Thread trong đó > Các Thread thực thi tuần tự lần lượt
+    
+Example 2 : 
+    
+    ExecutorService executorService = Executors.newCachedThreadPool()
+    
+    => Hệ thống tự quyết định số lượng Thread thực hiện trong ThreadPool
 
+Example 3:
+    
+    ExecutorService excuctorService = new FixedThreadPool(int nThread)
+    
+    => Tạo ra một ThreadPool có chứa tối đa nThread, Khi ThreadPool đạt đến giá trị tối đa nThread. Các thread còn lại sẽ đưa vào hàng chờ và đợi đến khi Thread có trong Pool được xử lý rồi mới thực thi tiếp
+    
 
+Link pdf by Nam ben : https://github.com/NamNguyen2110/book-pdf
 
 
