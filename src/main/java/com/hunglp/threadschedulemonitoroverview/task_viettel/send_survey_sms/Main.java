@@ -46,20 +46,9 @@ public class Main {
         List<SendSmsCallable> sendSmsCallableList = new ArrayList<>();
 
         for (int i = 0; i < listSurveySubparts.size(); i++) {
-            SendSmsCallable sendSmsCallable = new SendSmsCallable(listSurveySubparts.get(i), surveyRepository, sendSmsService);
+            SendSmsCallable sendSmsCallable = new SendSmsCallable(listSurveySubparts.get(i), new SmsService());
             sendSmsCallableList.add(sendSmsCallable);
         }
-
-
-
-
-
-
-
-
-
-        long finishTime = System.currentTimeMillis();
-        System.out.println("TIME EXECUTION");
 
     }
 }

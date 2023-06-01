@@ -8,7 +8,6 @@ public class Survey {
 
     private String timeSpam;
 
-
     public Survey() {
     }
 
