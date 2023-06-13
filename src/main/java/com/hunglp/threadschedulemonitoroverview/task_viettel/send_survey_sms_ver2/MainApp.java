@@ -1,7 +1,6 @@
 package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
 
 
-import com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
