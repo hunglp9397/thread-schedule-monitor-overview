@@ -1,7 +1,6 @@
 package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
 
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
