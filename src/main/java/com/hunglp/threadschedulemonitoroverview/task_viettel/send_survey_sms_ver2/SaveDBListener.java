@@ -13,13 +13,10 @@ public class SaveDBListener implements ApplicationListener<SendSurveyEvent> {
     @Autowired
     private SurveyServiceTask surveyServiceTask;
 
-
-
     @Override
     public void onApplicationEvent(SendSurveyEvent event) {
         System.out.println("Listening event...");
         List<Survey> surveys = event.getSurvey();
         surveyServiceTask.saveDB(surveys);
-
     }
 }

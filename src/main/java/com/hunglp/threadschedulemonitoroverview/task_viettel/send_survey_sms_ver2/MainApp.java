@@ -17,8 +17,6 @@ public class MainApp {
     @Bean
     CommandLineRunner run() {
        surveyController.sendSurvey();
-
-
         return null;
     }
 

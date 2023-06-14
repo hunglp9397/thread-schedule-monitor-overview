@@ -13,7 +13,6 @@ public class SendSmsListener implements ApplicationListener<SendSurveyEvent> {
     @Autowired
     private SurveyServiceTask surveyServiceTask;
 
-
     @Override
     public void onApplicationEvent(SendSurveyEvent event) {
         System.out.println("Listening event...");
