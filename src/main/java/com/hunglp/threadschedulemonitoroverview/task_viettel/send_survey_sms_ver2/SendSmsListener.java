@@ -17,7 +17,7 @@ public class SendSmsListener implements ApplicationListener<SendSurveyEvent> {
     public void onApplicationEvent(SendSurveyEvent event) {
         System.out.println("Listening event...");
         List<Survey> surveys = event.getSurvey();
-        surveyServiceTask.sendSms(surveys);
+        surveyServiceTask.doTaskByActionType("sendsms", surveys );
 
     }
 }

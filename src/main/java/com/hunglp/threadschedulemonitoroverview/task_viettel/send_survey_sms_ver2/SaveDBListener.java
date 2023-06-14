@@ -17,6 +17,6 @@ public class SaveDBListener implements ApplicationListener<SendSurveyEvent> {
     public void onApplicationEvent(SendSurveyEvent event) {
         System.out.println("Listening event...");
         List<Survey> surveys = event.getSurvey();
-        surveyServiceTask.saveDB(surveys);
+        surveyServiceTask.doTaskByActionType("savedb", surveys);
     }
 }
