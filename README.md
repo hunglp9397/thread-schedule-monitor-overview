@@ -1,4 +1,4 @@
-# Ví dụ về thread, multithread, monitor, schedule (Bao gồm các task ở Viettel)
+# Ví dụ về thread, multithread, monitor, schedule (Bao gồm các task ở VT)
 
 ##### - Ở mỗi package có file package-info miêu tả require example hoặc cách implement, giải thích :D\\
 
