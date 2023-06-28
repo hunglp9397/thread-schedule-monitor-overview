@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms_ver2;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,6 @@ public class MainApp {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2.MainApp.class, args);
+        SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms_ver2.MainApp.class, args);
     }
 }

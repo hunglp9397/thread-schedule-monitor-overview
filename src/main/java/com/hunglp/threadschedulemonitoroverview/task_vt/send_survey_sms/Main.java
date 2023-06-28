@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms_ver2;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

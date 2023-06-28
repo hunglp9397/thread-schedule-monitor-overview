@@ -1,8 +1,6 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms;
 
-public class Survey {
-
-    private int id;
+ class Survey {
 
     private String suspectPhone;
 
@@ -13,19 +11,10 @@ public class Survey {
     public Survey() {
     }
 
-    public Survey(int id, String suspectPhone, String surveyPhone, String timeSpam) {
-        this.id = id;
+    public Survey(String suspectPhone, String surveyPhone, String timeSpam) {
         this.suspectPhone = suspectPhone;
         this.surveyPhone = surveyPhone;
         this.timeSpam = timeSpam;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSuspectPhone() {

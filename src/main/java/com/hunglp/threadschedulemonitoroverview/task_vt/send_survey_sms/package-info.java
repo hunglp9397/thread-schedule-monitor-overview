@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms;
 
 /*
 - Module "anti-business-call" cần gưi thông tin paydload (survey) sang module "sms-api"

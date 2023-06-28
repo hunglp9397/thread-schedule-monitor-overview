@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url;
+package com.hunglp.threadschedulemonitoroverview.task_vt.automation_config_url;
 
 public class WebSocketStatus {
 

@@ -1,8 +1,6 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms_ver2;
+package com.hunglp.threadschedulemonitoroverview.task_vt.send_survey_sms_ver2;
 
 
-import com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms.SendSmsCallable;
-import com.hunglp.threadschedulemonitoroverview.task_viettel.send_survey_sms.SurveySmsDetailDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

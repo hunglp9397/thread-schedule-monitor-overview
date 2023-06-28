@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url;
+package com.hunglp.threadschedulemonitoroverview.task_vt.automation_config_url;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class MainApp {
     private VoiceToTextBatch voiceToTextBatch;
 
     public static void main(String[] args) {
-        SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_viettel.automation_config_url.MainApp.class, args);
+        SpringApplication.run(com.hunglp.threadschedulemonitoroverview.task_vt.automation_config_url.MainApp.class, args);
     }
 
     @Bean
