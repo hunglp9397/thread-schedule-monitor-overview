@@ -52,3 +52,6 @@ _**Soure code package**: com.hunglp.threadschedulemonitoroverview.learning_examp
 - notifyAll() : Đánh thức tất cả các Thread() đang bị ngủ bởi phương thức wait()
 
 ### 5. Deadlock
+- Deadlock xuất hiện khi quá lạm dụng synchronized. Làm cho các Thread nắm giữ các đối tượng dùng chung mãi mãi ko chịu trả ra cho đối tượng khác dùng
+- ![3.png](IMG_README/3.png)
+- _**Soure code package**: com.hunglp.threadschedulemonitoroverview.learning_example.multithread.deadlock_
