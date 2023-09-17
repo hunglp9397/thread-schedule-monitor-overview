@@ -9,7 +9,7 @@
 -  Giải thích:
    + NEW : Trạng thái tạo mới của 1 Thread, chưa gọi phương thức start()
    + RUNNABLE: Trạng thái đưa Thread vào hàng đợi cấp tài nguyên ( Sau khi gọi phương thức start())
-   + Trong quá trình Thread đang chạy, nếu có bất kỳ tác động nào đó (ngoại trừ làm kết thu vòng đời của Thread) Thread sẽ vòa trạng thái BLOCK, WAITING, TIMED_WAITING
+   + Trong quá trình Thread đang chạy, nếu có bất kỳ tác động nào đó (ngoại trừ làm kết thu vòng đời của Thread) Thread sẽ vào 1 trong 3  trạng thái BLOCK, WAITING, TIMED_WAITING
    + BLOCKED : Không có đủ điều kiện để chạy (Ví dụ trong một app đồng bộ, thì chỉ một Thread được sử dụng đến tài nguyên dùng chung, Các Thread còn lại sẽ phải chờ đợi cho THread ưu tiên kia sử dụng xong tài nguyên)
    + WAITING : Trạng thái Thread phải đợi 1 Thread nào đó hoàn thành tác vụ (Lưu ý là khác với BLOCKED)
    + TIMED_WAITING : Trạng thái Thread đợi 1 Thread nào đó trong 1 khoảng tgian xác định
@@ -17,3 +17,7 @@
 
 
 ## 2 Cơ chế Monitor - Lock
+- Hiều đơn giản là mỗi Thread nào đó sử dụng ta nguyên dùng chung thì sẽ có 1 lock và khi Thread chạy xong thì sẽ trả lại lock cho Monitor
+
+## 3. Multithread, Từ khóa synchronized
+- 

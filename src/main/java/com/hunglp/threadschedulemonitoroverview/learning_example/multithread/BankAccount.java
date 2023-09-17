@@ -8,10 +8,10 @@ public class BankAccount {
 
     long amount = 20000000;
 
-    public boolean checkAccountBalance(long withDrawAmount){
+    public boolean checkAccountBalance(long withDrawAmount) {
         try {
             Thread.sleep(2000); // Giả lập tgian query DB
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
@@ -24,26 +24,32 @@ public class BankAccount {
         return false;
     }
 
-    public void withDraw(String threadName, long withdrawAmount){
+    public synchronized void withDraw(String threadName, long withdrawAmount) {
         System.out.println("ThreadName : " + threadName + " want withdraw : " + withdrawAmount);
 
-        if (checkAccountBalance(withdrawAmount)) {
+        synchronized (this) {
+            if (checkAccountBalance(withdrawAmount)) {
 
-            try {
-                Thread.sleep(2000);
-                // Giả lập thời gian rút tiền và
-                // cập nhật số tiền còn lại vào cơ sở dữ liệu
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+                try {
+                    Thread.sleep(2000);
+                    // Giả lập thời gian rút tiền và
+                    // cập nhật số tiền còn lại vào cơ sở dữ liệu
+                } catch (InterruptedException e) {
+                    System.out.println("withdraw error!");
+                }
+
+                this.amount -= withdrawAmount;
+                System.out.println(threadName + " withdraw successful: " + withdrawAmount);
+            } else {
+                System.out.println("Withdraw error! Account balance not enough ");
             }
 
-            this.amount -= withdrawAmount;
         }
+
 
         // In ra số dư tài khoản
         System.out.println(threadName + " account balance: " + this.amount);
     }
-
 
 
 }
