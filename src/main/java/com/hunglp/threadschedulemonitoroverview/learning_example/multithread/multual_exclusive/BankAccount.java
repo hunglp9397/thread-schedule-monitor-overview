@@ -1,4 +1,4 @@
-package com.hunglp.threadschedulemonitoroverview.learning_example.multithread;
+package com.hunglp.threadschedulemonitoroverview.learning_example.multithread.multual_exclusive;
 
 
 import lombok.Data;
