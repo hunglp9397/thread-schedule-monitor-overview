@@ -10,7 +10,7 @@ public class BankAccount {
 
     public boolean checkAccountBalance(long withDrawAmount) {
         try {
-            Thread.sleep(2000); // Giả lập tgian query DB
+            Thread.sleep(1000); // Giả lập tgian query DB
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -29,11 +29,10 @@ public class BankAccount {
 
         synchronized (this) {
             if (checkAccountBalance(withdrawAmount)) {
-
                 try {
-                    Thread.sleep(2000);
-                    // Giả lập thời gian rút tiền và
-                    // cập nhật số tiền còn lại vào cơ sở dữ liệu
+                    System.out.println("Processing...");
+                    Thread.sleep(1000);
+                    // Giả lập thời gian rút tiền và  cập nhật số tiền còn lại vào cơ sở dữ liệu
                 } catch (InterruptedException e) {
                     System.out.println("withdraw error!");
                 }

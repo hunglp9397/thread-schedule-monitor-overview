@@ -4,6 +4,7 @@ public class Main1 {
 
     public static void main(String[] args) {
 
+        // Một tài khoản cho phép vợ và chông  dùng chung. Tại cùng một thời điểm x nào đó, vợ và chồng đều muốn rút tiền.
         BankAccount bankAccount = new BankAccount();
 
         System.out.println("Current Amount:" + bankAccount.getAmount());

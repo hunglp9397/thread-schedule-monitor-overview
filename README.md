@@ -55,3 +55,11 @@ _**Soure code package**: com.hunglp.threadschedulemonitoroverview.learning_examp
 - Deadlock xuất hiện khi quá lạm dụng synchronized. Làm cho các Thread nắm giữ các đối tượng dùng chung mãi mãi ko chịu trả ra cho đối tượng khác dùng
 - ![3.png](IMG_README/3.png)
 - _**Soure code package**: com.hunglp.threadschedulemonitoroverview.learning_example.multithread.deadlock_
+
+------------------------------------------------------------------------------------------------------------------------
+## Phần 2: Thread Executor
+
+
+### 1. Thread Executor
+- ![4.png](IMG_README/4.png)
+- 

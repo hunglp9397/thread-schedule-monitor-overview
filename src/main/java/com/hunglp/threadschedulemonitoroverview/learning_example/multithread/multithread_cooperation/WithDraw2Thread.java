@@ -17,6 +17,6 @@ public class WithDraw2Thread extends Thread {
 
     @Override
     public void run() {
-        bankAccount2.withdraw(threadName, withDrawAmount);
+        bankAccount2.withdrawWhenBalanceEnough(threadName, withDrawAmount);
     }
 }
