@@ -10,23 +10,20 @@ public class Main {
 
     public static void main(String[] args) {
         Map<Integer, List<String>> stateNumCitiesMap = new LinkedHashMap<>();
-
-        for(int i = 0 ;i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             stateNumCitiesMap.put(i, Arrays.asList("A", "B", "C", "D", "E"));
         }
-
         ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-        for(Integer key : stateNumCitiesMap.keySet()){
+        for (Integer key : stateNumCitiesMap.keySet()) {
             executorService.execute(() -> writeCitiesOfStateToFile(key, stateNumCitiesMap.get(key)));
         }
-
         executorService.shutdown();
-
     }
-    public  static void writeCitiesOfStateToFile(int stateNum, List<String> citiesList){
-        for(String city : citiesList){
-            System.out.println(stateNum + " " + Thread.currentThread().getName());
+
+    public static void writeCitiesOfStateToFile(int stateNum, List<String> citiesList) {
+        for (String city : citiesList) {
+            System.out.println(stateNum + " " + city + " " +  Thread.currentThread().getName());
         }
     }
 }
